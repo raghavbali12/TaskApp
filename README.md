@@ -42,4 +42,4 @@ In the project folder (TaskApp), run the .NET app:
 ```
 dotnet run
 ```
-The application should be running on localhost:5000. Open it from yoour browser of choice.
+The application should be running on localhost:5000. Open it from your browser of choice.
