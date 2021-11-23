@@ -8,7 +8,8 @@ export class AddTask extends Component {
         this.state = {
             text: props.text,
             day: props.day,
-            reminder: props.reminder
+            reminder: props.reminder,
+            completed: props.completed
         }
 
     }
@@ -67,7 +68,7 @@ isValidDate = (dateString) => {
 
         if (this.props.formType === 'addTask') {
 
-            this.props.onSubmit(this.state.text, this.state.day, this.state.reminder)
+            this.props.onSubmit(this.state.text, this.state.day, this.state.reminder, this.state.completed)
 
             this.setText('')
             this.setDay('')

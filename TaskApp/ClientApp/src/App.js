@@ -4,6 +4,7 @@ import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { About } from './components/About';
 import './custom.css'
+import audio from './media/music/complete_sound.mp3';
 
 export default class App extends Component {
     static displayName = App.name;
@@ -14,7 +15,9 @@ export default class App extends Component {
         this.state = {
             tasks: [],
             showAddTask: false,
-            setLoading:true
+            setLoading:true,
+            tasksToShow: 0,
+            showCompletedTasks: false
         };
     }
 
@@ -35,6 +38,17 @@ export default class App extends Component {
         return data
     }
 
+    setTasksToShow = (showCompleted=false) => {
+        let count = 0
+        if (!showCompleted) {
+            this.state.tasks.map((task) => {!task.completed && count++})
+        }
+        else {
+            count = this.state.tasks.length
+            console.log(count)
+        }
+        return count
+    }
 
     componentDidMount = async () => {
         const tasksFromServer = await this.fetchTasks()
@@ -43,11 +57,13 @@ export default class App extends Component {
         })
         this.setState({ tasks: tasksFromServer })
         this.setState({ setLoading: false })
+        let count = this.setTasksToShow()
+        this.setState({tasksToShow: count})
     }
 
-    addTask = async (text, day, reminder) => {
+    addTask = async (text, day, reminder, completed) => {
 
-        const task = { Task_text: text, Task_due_date: day, Reminder: reminder }
+        const task = { Task_text: text, Task_due_date: day, Reminder: reminder, Completed: completed }
         const res = await fetch('http://localhost:5000/api/Tasks',
             {
                 method: 'POST',
@@ -59,10 +75,12 @@ export default class App extends Component {
         const data = await res.json()
 
         this.setState({tasks: [...this.state.tasks, data]})
+        const count = this.state.tasksToShow
+        this.setState({tasksToShow: count + 1})
     }
 
-    editTask = async (id, text, day, reminder) => {
-        const taskToUpdate = { id: id, task_text: text, task_due_date: day, reminder: reminder }
+    editTask = async (id, text, day, reminder, completed) => {
+        const taskToUpdate = { id: id, task_text: text, task_due_date: day, reminder: reminder, completed: true }
         const { tasks } = this.state
         const updatedTasks = tasks.map((task) => task.id === id ? taskToUpdate : task)
         this.setState({ tasks: updatedTasks })
@@ -81,8 +99,33 @@ export default class App extends Component {
         const { tasks } = this.state
         const updatedTasks = tasks.filter((task) => task.id !== id)
         this.setState({ tasks: updatedTasks })
+        const count = this.state.tasksToShow
+        this.setState({tasksToShow: count - 1})
 
         await fetch(`http://localhost:5000/api/Tasks/${id}`, { method: 'DELETE' })
+    }
+
+    playAudio = () => {
+        new Audio(audio).play();
+    }
+
+    completeTask = async (id, text, day, reminder) => {
+        const taskToUpdate = { id: id, task_text: text, task_due_date: day, reminder: reminder, completed: true}
+        const { tasks } = this.state
+        const updatedTasks = tasks.map((task) => task.id === id ? {...task, completed: true} : task)
+        this.setState({ tasks: updatedTasks })
+        const count = this.state.tasksToShow
+        this.setState({tasksToShow: count - 1})
+        this.playAudio()
+
+        await fetch(`http://localhost:5000/api/Tasks/${id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(taskToUpdate)
+            })
     }
 
     toggleReminder = async (id) => {
@@ -108,10 +151,32 @@ export default class App extends Component {
         this.setState({showAddTask: !this.state.showAddTask})
     }
 
+    toggleShowCompleted = (showCompleted) => {
+        this.setState({showCompletedTasks: showCompleted})
+        if (showCompleted) {
+            const count = this.setTasksToShow(true)
+            this.setState({tasksToShow: count})
+        }
+        else {
+            const count = this.setTasksToShow(false)
+            this.setState({tasksToShow: count})
+        }
+        
+    }
+
   render () {
     return (
         <Layout>
-            <Route exact path='/' render={(props) => <Home {... this.state} toggleReminder={this.toggleReminder} deleteTask={this.deleteTask} toggleShowAdd={this.toggleShowAddTask} addTask={this.addTask} editTask={this.editTask} />} />
+            <Route 
+            exact path='/' 
+            render={(props) => <Home {... this.state} 
+            toggleReminder={this.toggleReminder} 
+            deleteTask={this.deleteTask} 
+            toggleShowAdd={this.toggleShowAddTask} 
+            toggleShowCompleted={this.toggleShowCompleted}
+            addTask={this.addTask} 
+            editTask={this.editTask}
+            completeTask={this.completeTask} />} />
             <Route path='/about' component={About} />
         </Layout>
     );

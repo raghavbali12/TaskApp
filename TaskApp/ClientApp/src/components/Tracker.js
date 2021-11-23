@@ -18,6 +18,7 @@ export class Tracker extends Component {
                         text=''
                         day=''
                         reminder={false}
+                        completed={false}
                         onSubmit={this.props.addTask}
                         toggleForm={null}
                         formType='addTask' />}
@@ -25,9 +26,7 @@ export class Tracker extends Component {
                     <SpinnerCircular
                         size="100"
                         style={{ display: "block", margin: "auto" }} /> :
-                    this.props.tasks.length > 0 ?
-                        <Tasks {... this.props} /> :
-                        <div style={{ textAlign: 'center' }}>No tasks yet</div>}
+                    <Tasks {... this.props} />}
             </div>
         );
     }

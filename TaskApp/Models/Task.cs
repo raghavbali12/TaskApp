@@ -6,6 +6,7 @@ namespace TaskApp.Models
         public int Id { get; set; }
         public string Task_text { get; set; }
         public string Task_due_date { get; set; }
+        public bool Completed { get; set; }
         public bool Reminder { get; set; }
 
         public Task()
