@@ -2,7 +2,7 @@
 A Web app for tracking tasks to-do
 
 ## Application Overview
-This is an application that allows a user to track various tasks-to do in a simple but elegant UI. Users can add, delete and edit existing tasks, as well as set 
+This is an application that allows a user to track various tasks to-do in a simple but elegant UI. Users can add, delete and edit existing tasks, as well as set 
 due-dates and reminders for individual tasks. 
 ![Alt text](/readme-screenshots/homepage.png?raw=true "Application homepage")
 
@@ -19,7 +19,7 @@ psql
 CREATE DATABASE taskapp;
 ```
 
-Create a super user and grant them the appropriate priviledges:
+Create a super user and grant them the appropriate privileges:
 
 ```
 CREATE USER <username> WITH PASSWORD <password>;
