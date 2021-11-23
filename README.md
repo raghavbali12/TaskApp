@@ -8,7 +8,7 @@ due-dates and reminders for individual tasks.
 
 ## Technical Overview
 This project utilizes a C# backend with an MVC framework to create an API. The app uses the Entity Framework ORM to create SQL tables that is stored in a PostgreSQL 
-database. The app frontend is written using React.js and various reusable components to create the UI. The front-end Javascript triggers a fetch API to send HTTP 
+database. The app frontend is written using React.js and various reusable components to create the UI (note that this project currently uses class-based components instead of function-based components with hooks). The front-end Javascript triggers a fetch API to send HTTP 
 requests to the backend API for GET, POST and PUT requests tied to various actions.
 
 ## Initial setup
