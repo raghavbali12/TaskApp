@@ -8,11 +8,11 @@ export class Home extends Component {
     render() {
         return (
             <div>
+                <Tracker {... this.props} />
                 <div className='form-control-custom'>
                     <label style={{textAlign: 'center'}}>Show completed</label>
-                    <input type='checkbox' onChange={(e) => this.props.toggleShowCompleted(e.currentTarget.checked)} />
+                    <input type='checkbox' checked={this.props.showCompletedTasks} onChange={(e) => this.props.toggleShowCompleted(e.currentTarget.checked)} />
                 </div>
-                <Tracker {... this.props} />
                 <div style={{ textAlign: 'center' }}>
                     <Link to="/about">About</Link>
                 </div>

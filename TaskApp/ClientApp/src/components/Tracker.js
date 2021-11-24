@@ -3,6 +3,7 @@ import { SpinnerCircular } from 'spinners-react';
 import { AddTask } from './AddTask';
 import { Header } from './Header';
 import { Tasks } from './Tasks'
+import { CompletedTasks } from './CompletedTasks';
 import './Tracker.css';
 
 export class Tracker extends Component {
@@ -26,7 +27,13 @@ export class Tracker extends Component {
                     <SpinnerCircular
                         size="100"
                         style={{ display: "block", margin: "auto" }} /> :
-                    <Tasks {... this.props} />}
+                    (this.props.tasksToShow === 0) ? 
+                        <p style={{textAlign: 'center'}}>No tasks yet</p> :
+                        <div>
+                            <Tasks {... this.props} />
+                            {this.props.showCompletedTasks && 
+                                <CompletedTasks {... this.props} />}
+                        </div>}
             </div>
         );
     }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { FaTimes, FaEdit, FaCheck } from 'react-icons/fa'
+import { FaTimes } from 'react-icons/fa'
 import ReactTooltip from "react-tooltip";
-import { AddTask } from './AddTask';
 
 
 export class CompletedTask extends Component {
@@ -9,7 +8,7 @@ export class CompletedTask extends Component {
 
     render() {
         return (
-            <div className={this.props.reminder ? 'task reminder' : 'task'} >
+            <div className={this.props.reminder ? 'task-completed reminder' : 'task-completed'} >
                 <h3>{this.props.task_text}
                     <div>
                         <FaTimes 

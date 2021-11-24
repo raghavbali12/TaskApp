@@ -74,6 +74,26 @@ body {
         justify-content: space-between;
     }
 
+    .task-completed {
+        background: #b8b8b8;
+        margin: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        border: solid thin;
+        color: #474646
+    }
+    
+        .task-completed.reminder {
+            border-left: 5px solid green;
+        }
+    
+        .task-completed h3 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    
+
 .add-form-custom {
     margin-bottom: 40px;
 }

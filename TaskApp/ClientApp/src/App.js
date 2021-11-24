@@ -45,7 +45,6 @@ export default class App extends Component {
         }
         else {
             count = this.state.tasks.length
-            console.log(count)
         }
         return count
     }
