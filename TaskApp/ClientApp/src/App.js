@@ -24,7 +24,7 @@ export default class App extends Component {
 
     //Fetch tasks
     fetchTasks = async () => {
-        const res = await fetch('http://localhost:5000/api/Tasks')
+        const res = await fetch('http://192.168.1.58:5000/api/Tasks')
         const data = await res.json()
 
         return data
@@ -32,7 +32,7 @@ export default class App extends Component {
 
     //Fetch single task
     fetchTask = async (id) => {
-        const res = await fetch(`http://localhost:5000/api/Tasks/${id}`)
+        const res = await fetch(`http://192.168.1.58:5000/api/Tasks/${id}`)
         const data = await res.json()
 
         return data
@@ -63,7 +63,7 @@ export default class App extends Component {
     addTask = async (text, day, reminder, completed) => {
 
         const task = { Task_text: text, Task_due_date: day, Reminder: reminder, Completed: completed }
-        const res = await fetch('http://localhost:5000/api/Tasks',
+        const res = await fetch('http://192.168.1.58:5000/api/Tasks',
             {
                 method: 'POST',
                 headers: {
@@ -84,7 +84,7 @@ export default class App extends Component {
         const updatedTasks = tasks.map((task) => task.id === id ? taskToUpdate : task)
         this.setState({ tasks: updatedTasks })
 
-        await fetch(`http://localhost:5000/api/Tasks/${id}`,
+        await fetch(`http://192.168.1.58:5000/api/Tasks/${id}`,
             {
                 method: 'PUT',
                 headers: {
@@ -101,7 +101,7 @@ export default class App extends Component {
         const count = this.state.tasksToShow
         this.setState({tasksToShow: count - 1})
 
-        await fetch(`http://localhost:5000/api/Tasks/${id}`, { method: 'DELETE' })
+        await fetch(`http://192.168.1.58:5000/api/Tasks/${id}`, { method: 'DELETE' })
     }
 
     playAudio = () => {
@@ -117,7 +117,7 @@ export default class App extends Component {
         this.setState({tasksToShow: count - 1})
         this.playAudio()
 
-        await fetch(`http://localhost:5000/api/Tasks/${id}`,
+        await fetch(`http://192.168.1.58:5000/api/Tasks/${id}`,
             {
                 method: 'PUT',
                 headers: {
@@ -135,7 +135,7 @@ export default class App extends Component {
         const taskToToggle = await this.fetchTask(id)
         const updateTask = { ...taskToToggle, reminder: !taskToToggle.reminder }
 
-        await fetch(`http://localhost:5000/api/Tasks/${id}`,
+        await fetch(`http://192.168.1.58:5000/api/Tasks/${id}`,
             {
                 method: 'PUT',
                 headers: {
